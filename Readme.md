@@ -267,5 +267,21 @@ Total Crossings: 27
 
 ## ⚠️ Limitations & Future Improvements
 
-### Current Limitations
-- Centroid tracking can fail with severe occlusions or
+Current Limitations
+Severe Occlusions: If one person is completely hidden behind another for too long (> 40 frames), the tracker will lose them and may assign a new ID when they reappear.
+
+Camera Angle: The system works best with an angled or top-down view. A straight-on, eye-level camera can cause occlusions.
+
+Crowd Density: In extremely dense crowds, centroids can merge, causing tracking errors.
+
+Object Re-identification: The centroid tracker is simple. If a person exits and re-enters, they will be given a new ID. It does not "remember" people.
+
+Future Improvements
+Upgrade Tracker: Replace the centroid tracker with a more robust algorithm like DeepSORT or ByteTrack. These use motion prediction and appearance features (Re-ID) to handle occlusions and re-identification.
+
+Zone-Based Counting: Implement a counting zone (an ROI polygon) instead of just a line. This is more robust for wide entrances.
+
+Deployment: Package the application in a Docker container and deploy it as a FastAPI service that can accept a video stream (RTSP) and return JSON count data.
+
+Heatmaps: Generate and overlay a heatmap to visualize high-traffic areas.
+
